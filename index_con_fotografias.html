@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070707">
+<title>La Crisis de los Misiles en Cuba · Documental interactivo</title>
+<style>
+:root{--bg:#070707;--ink:#ece4d3;--mut:#a39d90;--red:#c2392f;--ln:#2b2b2d;--pn:#141415;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:3rem}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 "Iowan Old Style","Palatino Linotype",Georgia,serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow-x:hidden}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:9;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,h3{font-weight:400;line-height:1.08;margin:0 0 .6em}
+h2{font-size:clamp(2.1rem,7.5vw,3.6rem)}h3{font-size:1.5rem}
+a{color:var(--ink)}
+.k{font:600 .8rem/1.3 system-ui,sans-serif;letter-spacing:.06em;color:var(--red);margin:0 0 .8rem}
+.mut,figcaption{color:var(--mut);font-size:.88rem;line-height:1.5}
+.c{max-width:42rem;margin:0 auto;padding:16vh 1.25rem 4vh}.c p{margin:0 0 1.1em}
+button{font:600 .8rem system-ui,sans-serif;background:none;color:var(--ink);border:1px solid #444;padding:.7rem 1rem;min-height:44px;min-width:44px;border-radius:2px;cursor:pointer}
+button.on,button:hover{border-color:var(--red);background:#1b1010}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+#top{position:fixed;top:env(safe-area-inset-top);left:0;right:0;z-index:8;display:flex;gap:1.2rem;overflow-x:auto;padding:.8rem 1rem;background:linear-gradient(#070707f2,#07070700);font:600 .78rem system-ui,sans-serif;white-space:nowrap}
+#top a{color:var(--mut);text-decoration:none;padding:.2rem 0}
+.scene{--p:0;--o:1;position:relative;height:var(--h)}
+.stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#cover .bg{position:absolute;inset:-5%;background:radial-gradient(ellipse at 28% 38%,#3b3a38,#070707 68%);transform:scale(calc(1 + var(--p)*.3))}
+#cover .t{position:absolute;inset:0;display:grid;place-content:center;gap:.7rem;text-align:center;padding:1rem;opacity:calc(1 - var(--p)*2.6);transform:translateY(calc(var(--p)*-70px))}
+#cover h1{font-size:clamp(2.3rem,10vw,6rem);letter-spacing:.03em;margin:0}#cover .t p{margin:0}
+.dn{animation:b 1.8s ease-in-out infinite;color:var(--mut);font:.85rem system-ui,sans-serif}
+@keyframes b{50%{transform:translateY(8px)}}
+#cover .m{position:absolute;inset:0;width:100%;height:100%;opacity:calc((var(--p) - .25)*3)}
+#cover .m polyline{stroke-dasharray:1 1;stroke-dashoffset:var(--o)}
+#cover .m g{opacity:calc((var(--p) - .4)*3)}#cover .m text{fill:var(--ink);font:12px system-ui,sans-serif}
+.slot{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:1rem;border:1px dashed #555;background:repeating-linear-gradient(45deg,#101010,#101010 10px,#151515 10px,#151515 20px);color:var(--mut);font:.85rem/1.4 system-ui,sans-serif}
+figure{margin:2rem 0}img{width:100%;display:block}
+.mp{background:#05070a}
+#map{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.land{fill:#17191b;stroke:#3a3f44;stroke-width:1}.lbl{fill:#7d8791;font:italic 11px Georgia,serif}
+.mk{opacity:0;transition:opacity .5s;cursor:pointer}.mk.on{opacity:1}
+.mk circle+circle{fill:var(--red);stroke:#fff;stroke-width:1}.mk.apt circle+circle{fill:var(--ink)}
+.mk text{fill:var(--ink);font:600 10px system-ui,sans-serif;paint-order:stroke;stroke:#000;stroke-width:3px}
+#arc{fill:none;stroke:var(--red);stroke-width:2;stroke-dasharray:1 1;stroke-dashoffset:var(--o)}
+.calm .mk circle+circle{fill:#8fa6b8}.calm #arc{stroke:#8fa6b8;opacity:.4}
+.ship{fill:var(--ink);transition:opacity .5s}
+.hud{position:absolute;left:0;right:0;bottom:0;padding:3rem 1.25rem calc(1rem + env(safe-area-inset-bottom));background:linear-gradient(#0000,#000e 45%);pointer-events:none}
+.hud>*{pointer-events:auto}.hud p{margin:.2rem 0 .8rem;font-size:.95rem;line-height:1.5;max-width:40rem}.hud p.k{margin:0}
+.st,.x nav{display:flex;gap:.5rem;flex-wrap:wrap}
+.ctl{position:absolute;right:.75rem;top:3.4rem;display:grid;gap:.4rem}
+#card{position:absolute;left:.75rem;right:4rem;top:3.4rem;max-width:26rem;background:var(--pn);border:1px solid var(--ln);border-left:2px solid var(--red);padding:1rem 1.2rem;z-index:4;font-size:.95rem;line-height:1.55;max-height:55svh;overflow:auto}
+#card[hidden]{display:none}
+#tl{display:flex;gap:.5rem;overflow-x:auto;scroll-snap-type:x proximity;padding:.4rem 0 .8rem;-webkit-overflow-scrolling:touch}
+#tl button{flex:none;scroll-snap-align:start}
+.box,#dp{background:var(--pn);border-left:2px solid var(--red);padding:1rem 1.25rem;margin-top:1rem}
+details{border-top:1px solid var(--ln);padding:.8rem 0}summary{cursor:pointer;font-weight:600}
+dt{font-weight:700;margin-top:.8rem}dd{margin:0;color:var(--mut);font-size:.95rem}
+.rm .scene{height:auto!important}.rm .stick{position:relative}.rm .mp{height:100svh}
+.rm #cover .stick{height:auto}.rm #cover .t{position:relative;opacity:1;transform:none;padding:22vh 1rem 6vh}
+.rm #cover .m{position:relative;opacity:1;height:auto}.rm #cover .m g{opacity:1}.rm #cover .m polyline{stroke-dashoffset:0}
+.rm #cover .bg{transform:none}.rm .dn{animation:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style></head>
+<body>
+<nav id="top" aria-label="Capítulos"><a href="#c1">I</a><a href="#c2">II</a><a href="#mapa">Mapa</a><a href="#c3">III</a><a href="#c4">IV</a><a href="#c5">V</a><a href="#c6">VI</a><a href="#c7">VII</a><a href="#fuentes">Fuentes</a></nav>
+
+<header class="scene" id="cover" style="--h:260vh"><div class="stick">
+<div class="bg"></div>
+<svg class="m" viewBox="0 0 400 300" aria-hidden="true">
+<polyline pathLength="1" points="120,240 150,205 190,100 340,45" fill="none" stroke="#c2392f" stroke-width="1.5"/>
+<g><circle cx="120" cy="240" r="3" fill="#ece4d3"/><text x="128" y="244">La Habana 23°08′N 82°23′O</text>
+<circle cx="150" cy="205" r="3" fill="#ece4d3"/><text x="158" y="209">Miami 25°46′N 80°12′O</text>
+<circle cx="190" cy="100" r="3" fill="#ece4d3"/><text x="198" y="104">Washington 38°54′N 77°02′O</text>
+<circle cx="340" cy="45" r="3" fill="#ece4d3"/><text x="230" y="33">Moscú 55°45′N 37°37′E</text></g></svg>
+<div class="t"><p class="k">Archivo histórico</p><h1>LA CRISIS DE LOS MISILES EN CUBA</h1>
+<p style="font-size:clamp(1.1rem,4vw,1.6rem)">13 días al borde de una guerra nuclear.</p>
+<p class="mut" style="letter-spacing:.2em">16–28 DE OCTUBRE DE 1962</p><p class="dn" aria-hidden="true">Desplázate hacia abajo ↓</p></div>
+</div></header>
+
+<section class="c" id="c1"><p class="k">Capítulo I</p><h2>Un mundo dividido</h2>
+<p>En 1962, Estados Unidos y la Unión Soviética lideraban bloques enfrentados y acumulaban armas nucleares: la paz descansaba en la disuasión, el temor a una represalia devastadora. En enero de 1959 triunfó la Revolución cubana y sus relaciones con Washington se deterioraron con rapidez, hasta la ruptura diplomática de enero de 1961. En abril de 1961, la invasión de bahía de Cochinos, organizada por Estados Unidos, fracasó en tres días y Cuba se acercó aún más a Moscú.</p>
+<p>Moscú tenía menos misiles intercontinentales que Washington y veía amenazantes los misiles estadounidenses Júpiter en Turquía e Italia. Instalar misiles en Cuba podía proteger a un aliado y reequilibrar el poder nuclear; los historiadores discuten cuánto pesó cada motivo.</p>
+<figure class="ph" data-t="El presidente Kennedy reunido con su gabinete durante la crisis, fotografía de archivo" data-u="https://unwritten-record.blogs.archives.gov/2022/10/20/60th-anniversary-the-cuban-missile-crisis/" data-n="National Archives, fotografía 79-AR-7550B" data-img="https://i0.wp.com/unwritten-record.blogs.archives.gov/wp-content/uploads/sites/6/2022/10/79-AR-7550B.jpg?resize=1200%2C928"></figure>
+<div class="x" id="per"><p class="k">Compara perspectivas</p><nav></nav><div class="box out" aria-live="polite"></div></div></section>
+
+<section class="c" id="c2"><p class="k">Capítulo II</p><h2>Los misiles llegan a Cuba</h2>
+<p>La decisión soviética se tomó hacia mayo de 1962. La Operación Anádyr envió miles de soldados y material por mar, con tapaderas para ocultar su destino. Llegaron misiles tierra-aire SA-2 y misiles balísticos de alcance medio (MRBM, unos 2 000 km), y se construyeron sitios para misiles de alcance intermedio (IRBM, más de 4 000 km), que no llegaron a la isla.</p>
+<p><b>Lo que se sabía entonces:</b> Estados Unidos creía que la ayuda soviética era defensiva. <b>Lo que se supo después:</b> había unos 40 000 soldados soviéticos y armas nucleares tácticas en la isla. El número exacto y las reglas para su uso siguen en debate.</p>
+<figure class="ph" data-t="Fotografía aérea del emplazamiento de misiles MRBM n.º 1 en San Cristóbal, Cuba, 14 de octubre de 1962" data-u="https://www.archives.gov/milestone-documents/aerial-photograph-of-missiles-in-cuba" data-n="National Archives and Records Administration, fotografía PX1966-020-007" data-img="https://www.archives.gov/files/milestone-documents/images/doc-094b-big.jpg"></figure></section>
+
+<div class="scene" id="mapa" style="--h:340vh"><div class="stick mp">
+<svg id="map" viewBox="0 0 600 500" role="group" aria-label="Mapa esquemático del Caribe y Cuba con marcadores interactivos">
+<rect x="-300" y="-300" width="1200" height="1100" fill="#05070a"/>
+<path class="land" d="M0 0H345L322 44L290 96L232 138L182 166L172 192L176 210L200 270L192 296L170 288L160 270L146 240L126 204L100 206L50 194L0 190Z"/>
+<path class="land" d="M0 400L20 360L50 352L66 380L56 420L0 470Z"/>
+<path class="land" d="M100 366L130 340L152 334L190 346L230 360L270 372L300 380L322 392L300 398L270 386L230 378L190 366L150 356L118 372Z"/>
+<path class="land" d="M312 406L360 400L420 410L440 424L400 440L340 436L314 424Z"/><ellipse class="land" cx="240" cy="440" rx="20" ry="6"/>
+<text class="lbl" x="20" y="320">Golfo de México</text><text class="lbl" x="470" y="200">Océano Atlántico</text><text class="lbl" x="150" y="470">Mar Caribe</text>
+<text class="lbl" x="20" y="60">Estados Unidos</text><text class="lbl" x="130" y="318">Cuba</text><text class="lbl" x="596" y="494" text-anchor="end">Moscú: fuera del mapa (≈9 000 km)</text>
+<path id="arc" pathLength="1" d="M343 219A167 167 0 0 1 437 476"/><g id="sh"></g><g id="mk"></g></svg>
+<div class="ctl"><button data-z="1" aria-label="Acercar">+</button><button data-z="-1" aria-label="Alejar">−</button><button data-z="0" aria-label="Restablecer vista">⟲</button></div>
+<aside id="card" hidden aria-live="polite"></aside>
+<div class="hud"><p class="k" id="stl"></p><p id="stx"></p>
+<nav class="st" aria-label="Fases del mapa"><button>Despliegue</button><button>Cuarentena</button><button>Resolución</button></nav>
+<p class="mut" style="margin:.8rem 0 0">Toca un marcador para abrir su ficha; arrastra en horizontal para mover el mapa. Rojo: emplazamientos y hechos. Crema: bases y ciudades. Línea roja: cuarentena, trazado ilustrativo. Mapa SVG integrado: funciona sin conexión.</p></div>
+</div></div>
+
+<section class="c" id="c3"><p class="k">Capítulo III</p><h2>16 de octubre: el descubrimiento</h2>
+<p>El 14 de octubre, un avión U-2 de la fuerza aérea estadounidense fotografió la zona de San Cristóbal. Los analistas identificaron misiles y, la mañana del 16, el asesor de seguridad McGeorge Bundy informó a Kennedy. El presidente reunió al ExComm, un comité de asesores, para decidir la respuesta.</p>
+<p>Se discutieron la diplomacia, la cuarentena naval, el ataque aéreo y la invasión. Ninguna opción estaba libre de riesgos.</p>
+<figure class="ph" data-t="John F. Kennedy firma la proclamación de cuarentena de Cuba, octubre de 1962" data-u="https://unwritten-record.blogs.archives.gov/2022/10/20/60th-anniversary-the-cuban-missile-crisis/" data-n="National Archives, fotografía 79-AR-7558B" data-img="https://i0.wp.com/unwritten-record.blogs.archives.gov/wp-content/uploads/sites/6/2022/10/79-AR-7558Bhorz.jpg?resize=1200%2C918"></figure>
+<div class="x" id="dec"><p class="k">Decisiones bajo presión</p><nav></nav><div class="box out" aria-live="polite"></div>
+<p class="mut">Ejercicio educativo retrospectivo: muestra riesgos que se discutieron entonces, no predice resultados.</p></div></section>
+
+<section class="c" id="c4"><p class="k">Capítulo IV</p><h2>Trece días de tensión</h2>
+<p>Elige un día. La cronología es un recorrido de lectura, no una simulación de lo que sabían los dirigentes cada hora.</p>
+<div id="tl" role="group" aria-label="Días del 16 al 28 de octubre"></div><div id="dp" aria-live="polite"></div>
+<figure class="ph" data-t="John F. Kennedy y su gabinete durante la crisis de los misiles, fotografía de archivo" data-u="https://unwritten-record.blogs.archives.gov/2022/10/20/60th-anniversary-the-cuban-missile-crisis/" data-n="National Archives, fotografía 79-AR-7550B" data-img="https://i0.wp.com/unwritten-record.blogs.archives.gov/wp-content/uploads/sites/6/2022/10/79-AR-7550B.jpg?resize=1200%2C928"></figure></section>
+
+<section class="c" id="c5"><p class="k">Capítulo V</p><h2>El mundo al borde de una guerra nuclear</h2>
+<p>La disuasión funcionaba con la amenaza de represalia, pero exigía interpretar al adversario con información incompleta. Ambos bandos calcularon mal: Washington creyó defensivo el despliegue; Moscú no previó que los misiles se descubrirían a tiempo.</p>
+<p>Hubo episodios que los dirigentes no conocían en tiempo real. El 27 de octubre, un U-2 se desvió sobre territorio soviético, y el submarino soviético B-59 fue hostigado con cargas de profundidad de aviso; según testimonios posteriores, el oficial Vasili Arjípov se opuso a lanzar un torpedo nuclear, aunque los relatos difieren en cuán cerca estuvo ese momento.</p>
+<p>No existe una cuenta regresiva documentada hacia la guerra: hubo riesgos acumulados y decisiones tomadas bajo presión.</p></section>
+
+<section class="c" id="c6"><p class="k">Capítulo VI</p><h2>El acuerdo</h2>
+<p>El 28 de octubre, Jrushchov anunció por Radio Moscú el desmantelamiento de los misiles. A cambio, Estados Unidos se comprometió públicamente a no invadir Cuba, un compromiso condicionado a una verificación que Cuba no aceptó. Además, en un entendimiento secreto, transmitido por Robert Kennedy al embajador Dobrynin el 27 de octubre, Washington retiraría los misiles Júpiter de Turquía, lo que ocurrió en 1963.</p>
+<p>Fidel Castro, excluido de la negociación, planteó cinco puntos y rechazó las inspecciones. El acuerdo no fue una victoria absoluta de nadie.</p></section>
+
+<section class="c" id="c7"><p class="k">Capítulo VII</p><h2>Las consecuencias</h2>
+<p>Kennedy salió fortalecido, pero más consciente del peligro. Jrushchov fue criticado en Moscú y destituido en 1964, por varios motivos. Cuba, que se sintió relegada, mantuvo su alianza con la URSS.</p>
+<p>En 1963 se acordó la línea directa Washington–Moscú y se firmó el Tratado de Prohibición Parcial de los Ensayos Nucleares. Pocos días de decisiones políticas pesaron sobre el mundo durante décadas, y mostraron el valor de comunicarse a tiempo.</p></section>
+
+<section class="c" id="explora"><p class="k">Explora más</p><h2>Mitos, documentos y glosario</h2>
+<details><summary>¿Hubo un bloqueo?</summary><p>Oficialmente fue una «cuarentena»: un bloqueo se consideraba un acto de guerra según el derecho internacional.</p></details>
+<details><summary>¿Los misiles Júpiter formaron parte del acuerdo?</summary><p>Sí, mediante un compromiso secreto. En público, Washington negó cualquier trueque; los misiles se retiraron en 1963.</p></details>
+<details><summary>¿Kennedy ganó sin conceder nada?</summary><p>No. Hubo concesiones de ambas partes, algunas conocidas solo décadas después.</p></details>
+<h3 style="margin-top:2rem">Documentos (paráfrasis, no citas)</h3>
+<details><summary>22 oct.: discurso televisado de J. F. Kennedy</summary><p>Anunció los misiles ofensivos en Cuba y la cuarentena, y advirtió que un ataque desde Cuba se trataría como un ataque soviético. Texto íntegro en la <a href="https://www.jfklibrary.org/learn/about-jfk/jfk-in-history/cuban-missile-crisis" target="_blank" rel="noopener">Biblioteca JFK</a>.</p></details>
+<details><summary>26 y 27 oct.: cartas de Jrushchov a Kennedy</summary><p>La primera ofrecía retirar los misiles a cambio de una garantía de no invasión; la segunda añadía los Júpiter en Turquía. Documentos en la colección <a href="https://history.state.gov/historicaldocuments/frus1961-63v11" target="_blank" rel="noopener">FRUS 1961–1963, vol. XI</a>.</p></details>
+<h3 style="margin-top:2rem">Glosario</h3>
+<dl><dt>Disuasión nuclear</dt><dd>Evitar un ataque mediante la amenaza creíble de una represalia devastadora.</dd>
+<dt>ExComm</dt><dd>Comité Ejecutivo del Consejo de Seguridad Nacional, que asesoró a Kennedy.</dd>
+<dt>Cuarentena naval</dt><dd>Interceptación de buques con armamento ofensivo rumbo a Cuba.</dd>
+<dt>MRBM / IRBM</dt><dd>Misiles balísticos de alcance medio e intermedio.</dd>
+<dt>Reconocimiento aéreo</dt><dd>Fotografía desde aviones como el U-2 para obtener información militar.</dd>
+<dt>Línea directa</dt><dd>Enlace de comunicación creado en 1963 entre Washington y Moscú.</dd></dl></section>
+
+<section class="c" id="fuentes"><p class="k">Fuentes</p><h2>Fuentes y verificación</h2>
+<p><b>Hechos establecidos:</b> fechas, discurso del 22, cuarentena del 24, derribo del U-2 el 27 y anuncio del 28. <b>Interpretaciones:</b> los motivos soviéticos y el peso de cada decisión. <b>Incertidumbres:</b> número exacto de armas tácticas y episodios como el del B-59.</p>
+<p>Enlaces de entrada a los archivos; el documento concreto debe verificarse en cada uno:</p>
+<ul>
+<li><a href="https://www.jfklibrary.org/learn/about-jfk/jfk-in-history/cuban-missile-crisis" target="_blank" rel="noopener">Biblioteca Presidencial JFK</a></li>
+<li><a href="https://history.state.gov/milestones/1961-1968/cuban-missile-crisis" target="_blank" rel="noopener">Oficina del Historiador, Departamento de Estado</a></li>
+<li><a href="https://history.state.gov/historicaldocuments/frus1961-63v11" target="_blank" rel="noopener">FRUS 1961–1963, vol. XI</a></li>
+<li><a href="https://digitalarchive.wilsoncenter.org" target="_blank" rel="noopener">Wilson Center Digital Archive</a></li>
+<li><a href="https://www.cia.gov/readingroom" target="_blank" rel="noopener">CIA Reading Room</a></li>
+<li><a href="https://www.archives.gov" target="_blank" rel="noopener">National Archives (NARA)</a></li>
+<li><a href="https://www.loc.gov" target="_blank" rel="noopener">Library of Congress</a></li></ul>
+<p class="mut">El texto, el mapa SVG y los controles funcionan sin conexión. Las fotografías de esta versión se cargan desde archivos de National Archives y requieren Internet; no están incrustadas en Base64. Los créditos enlazan a las fichas de origen. Las posiciones del mapa son aproximadas.</p></section>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(RM)document.documentElement.classList.add('rm');
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const J='https://www.jfklibrary.org/learn/about-jfk/jfk-in-history/cuban-missile-crisis',H='https://history.state.gov/milestones/1961-1968/cuban-missile-crisis';
+
+/* Fotografías: recuadro con enlace a la fuente; si hay data-img se carga con lazy loading */
+$$('.ph').forEach(f=>{
+ const{t,u,n,img}=f.dataset,
+ cap=`<figcaption>${t}. Procedencia: <a href="${u}" target="_blank" rel="noopener">${n}</a>. Fecha, autoría y derechos: consultar en la fuente.</figcaption>`,
+ slot=()=>{f.innerHTML=`<div class="slot" role="img" aria-label="${t}">Fotografía de archivo pendiente de enlace verificado.<br>${t}</div>${cap}`};
+ if(!img)return slot();
+ const i=new Image();i.loading='lazy';i.alt=t;i.onerror=slot;i.src=img;f.append(i);f.insertAdjacentHTML('beforeend',cap)
+});
+
+/* Pestañas simples */
+function tabs(id,items,pre){
+ const c=$(id),nav=c.querySelector('nav'),out=c.querySelector('.out');
+ items.forEach(it=>{const b=document.createElement('button');b.textContent=it[0];b.onclick=()=>{[...nav.children].forEach(x=>x.classList.toggle('on',x===b));out.textContent=it[1]};nav.append(b)});
+ if(pre)nav.firstChild.click();else out.textContent='Elige una opción para ver los riesgos que se discutieron.'
+}
+tabs('#per',[
+ ['EE. UU.','Los misiles de alcance medio en Cuba amenazaban gran parte del territorio estadounidense con poco aviso y alteraban el equilibrio estratégico. Kennedy había advertido en septiembre contra armas ofensivas en la isla, y Berlín seguía siendo un foco de fricción.'],
+ ['URSS','Moscú veía una Cuba amenazada tras Bahía de Cochinos y una desventaja nuclear frente a EE. UU., con misiles Júpiter junto a sus fronteras. Se discute cuánto pesó proteger a Cuba frente a reequilibrar el poder nuclear.'],
+ ['Cuba','La dirección cubana temía una invasión y defendió su derecho a armarse. Quedó fuera de la negociación entre las superpotencias, rechazó las inspecciones y planteó cinco puntos, entre ellos el fin del embargo y la salida de Estados Unidos de Guantánamo.']],1);
+tabs('#dec',[
+ ['Diplomacia','Presión política y negociación. Riesgo señalado: dar tiempo a Moscú mientras los misiles seguían en construcción.'],
+ ['Cuarentena','Cortaba nuevos envíos sin atacar. Riesgo: no retiraba los misiles ya presentes y podía provocar choques en el mar o represalias en Berlín.'],
+ ['Ataque aéreo','Destruir los sitios. Riesgo: la inteligencia no garantizaba eliminarlos todos y habría causado bajas soviéticas, con una respuesta imprevisible.'],
+ ['Invasión','Eliminar la amenaza y al gobierno cubano. Riesgo: combate con fuerzas soviéticas, grandes bajas y, como se supo después, armas nucleares tácticas en la isla.']],0);
+
+/* Mapa esquemático: proyección simple, posiciones aproximadas */
+const NS='http://www.w3.org/2000/svg',map=$('#map'),G=$('#mk'),SH=$('#sh'),card=$('#card');
+const X=(la,lo)=>[(lo+90)*20,(40-la)*20];
+const V={cuba:[80,310,260,130],wash:[120,0,320,300],quar:[120,190,380,300],east:[200,330,200,100],all:[0,0,600,500]};
+const T=[['Despliegue','Cuba, 1962: emplazamientos de misiles identificados por el reconocimiento aéreo. Las posiciones son a nivel de localidad.','cuba'],
+ ['Cuarentena','Línea esquemática a unas 500 millas náuticas de Cuba. Los buques son ilustrativos: no representan posiciones reales.','quar'],
+ ['Resolución','El 28 de octubre se anuncia el desmantelamiento de los misiles: las alertas dejan paso a la negociación.','all']];
+const S=[
+{n:'Washington D. C.',c:[38.9,-77.04],o:0,k:'apt',t:'Centro de decisión',d:'16–28 oct. 1962',i:'Sede del ExComm en la Casa Blanca. Desde aquí Kennedy anunció la cuarentena el 22 de octubre.',a:'ciudad documentada',u:J},
+{n:'Base McCoy (Florida)',c:[28.43,-81.31],o:.02,k:'apt',t:'Base aérea',d:'oct. 1962',i:'Desde McCoy operaron los U-2 de la fuerza aérea de EE. UU. que sobrevolaron Cuba.',a:'localización de la base',u:H},
+{n:'San Cristóbal',c:[22.72,-83.05],o:.03,k:'',t:'Emplazamiento de misiles MRBM',d:'fotos del 14 oct.',i:'Primer grupo de emplazamientos identificado en las fotos del U-2 del 14 de octubre: base de la información que Kennedy recibió el 16.',a:'localidad; sin posición exacta del sitio',u:J},
+{n:'Sagua la Grande',c:[22.81,-80.07],o:.06,k:'',t:'Emplazamiento de misiles MRBM',d:'fotos del 14–17 oct.',i:'Otra zona con emplazamientos de misiles de alcance medio identificados por el reconocimiento aéreo de esos días.',a:'localidad; sin posición exacta del sitio',u:J},
+{n:'Guanajay',c:[22.93,-82.69],o:.09,k:'',t:'Sitio IRBM en construcción',d:'oct. 1962',i:'Obras para misiles de alcance intermedio; esos misiles no llegaron a la isla.',a:'localidad; sin posición exacta del sitio',u:H},
+{n:'Remedios',c:[22.5,-79.55],o:.12,k:'',t:'Sitio IRBM en construcción',d:'oct. 1962',i:'Otro sitio en obras para misiles de alcance intermedio, sin misiles instalados.',a:'localidad; sin posición exacta del sitio',u:H},
+{n:'Guantánamo',c:[19.9,-75.15],o:.2,k:'apt',t:'Base naval de EE. UU.',d:'22–23 oct.',i:'Estados Unidos reforzó la base y evacuó a familiares de su personal al comenzar la crisis.',a:'localización de la base',u:H},
+{n:'Línea de cuarentena',c:[21,-66.7],o:.4,k:'',t:'Zona naval (esquemática)',d:'24 oct., 10:00 (Washington)',i:'Área de interceptación a unas 500 millas náuticas de Cuba. Su trazado aquí es ilustrativo.',a:'aproximación ilustrativa',u:H},
+{n:'Derribo del U-2',c:[20.96,-75.72],o:.55,k:'',t:'Acontecimiento clave',d:'27 oct.',i:'Un misil tierra-aire soviético SA-2 derribó sobre el este de Cuba el U-2 del mayor Rudolf Anderson Jr., que murió: el único estadounidense fallecido por acción hostil en la crisis.',a:'zona aproximada del este de Cuba',u:J}];
+S.forEach(m=>{
+ const[x,y]=X(...m.c),g=document.createElementNS(NS,'g');m.xy=[x,y];
+ g.setAttribute('class','mk '+m.k);g.setAttribute('transform',`translate(${x} ${y})`);g.setAttribute('tabindex',0);g.setAttribute('role','button');g.setAttribute('aria-label',m.n);
+ g.innerHTML=`<circle r="14" fill="transparent"/><circle r="4.5"/><text x="8" y="3">${m.n}</text>`;
+ g.onclick=()=>show(m);g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(m)}};
+ G.append(g);m.g=g});
+function show(m){
+ card.hidden=false;
+ card.innerHTML=`<button class="x" style="float:right" aria-label="Cerrar">×</button><p class="k">${m.t}</p><h3>${m.n}</h3><p>${m.i}</p><p class="mut">Fecha: ${m.d}.<br>Precisión: ${m.a}.<br>Fuente: <a href="${m.u}" target="_blank" rel="noopener">${m.u.includes('jfk')?'Biblioteca JFK':'Oficina del Historiador (EE. UU.)'}</a></p>`;
+ card.querySelector('.x').onclick=()=>card.hidden=true;
+ setView([m.xy[0]-100,m.xy[1]-50,200,100])}
+const SHP=[-35,0,28].map(a=>{const r=a*Math.PI/180,P=R=>[300+R*Math.cos(r),380+R*Math.sin(r)];return[P(270),P(178)]});
+SHP.forEach(()=>{const c=document.createElementNS(NS,'circle');c.setAttribute('r',4);c.setAttribute('class','ship');SH.append(c)});
+
+let cur=[...V.all],tgt=cur,raf=0,last=-1,dr=null;
+const paint=()=>map.setAttribute('viewBox',cur.map(v=>v.toFixed(1)).join(' '));
+function frame(){raf=0;let d=0;cur=cur.map((v,i)=>{d+=Math.abs(tgt[i]-v);return v+(tgt[i]-v)*.16});paint();if(d>.6)raf=requestAnimationFrame(frame);else{cur=[...tgt];paint()}}
+function setView(a){tgt=[...a];if(RM){cur=[...a];paint()}else if(!raf)raf=requestAnimationFrame(frame)}
+map.onpointerdown=e=>{dr={x:e.clientX,y:e.clientY,v:[...tgt],m:0}};
+map.onpointermove=e=>{
+ if(!dr)return;const dx=e.clientX-dr.x,dy=e.clientY-dr.y;
+ if(!dr.m){if(Math.hypot(dx,dy)<8)return;dr.m=1;map.setPointerCapture(e.pointerId)}
+ const k=Math.max(dr.v[2]/map.clientWidth,dr.v[3]/map.clientHeight);
+ cur=tgt=[dr.v[0]-dx*k,dr.v[1]-dy*k,dr.v[2],dr.v[3]];paint()};
+map.onpointerup=map.onpointercancel=()=>{dr=null};
+$$('.ctl button').forEach(b=>b.onclick=()=>{
+ const z=+b.dataset.z;if(!z)return setView(V[T[Math.max(last,0)][2]]);
+ const f=z>0?.7:1/.7,[x,y,w,h]=tgt,nw=cl(w*f,60,700),nh=nw*h/w;setView([x+(w-nw)/2,y+(h-nh)/2,nw,nh])});
+
+/* Estado del mapa según el scroll (reversible) */
+function render(p){
+ const st=p<.34?0:p<.67?1:2,q=cl((p-.34)/.3);
+ S.forEach(m=>m.g.classList.toggle('on',p>=m.o));
+ $('#mapa').style.setProperty('--o',(1-q).toFixed(3));
+ [...SH.children].forEach((c,i)=>{const[a,b]=SHP[i];c.setAttribute('cx',a[0]+(b[0]-a[0])*q);c.setAttribute('cy',a[1]+(b[1]-a[1])*q);c.style.opacity=st===1?1:0});
+ map.classList.toggle('calm',st===2);
+ if(st!==last){last=st;$('#stl').textContent=T[st][0];$('#stx').textContent=T[st][1];$$('.st button').forEach((b,j)=>b.classList.toggle('on',j===st));setView(V[T[st][2]])}}
+const goP=p=>{const s=$('#mapa');scrollTo({top:s.offsetTop+p*(s.offsetHeight-innerHeight),behavior:'smooth'})};
+$$('.st button').forEach((b,i)=>b.onclick=()=>{const p=[.1,.5,.85][i];RM?render(p):goP(p)});
+
+/* Escenas ligadas al scroll */
+const scenes=$$('.scene');let tk=0;
+function onScroll(){
+ if(RM||tk)return;
+ tk=requestAnimationFrame(()=>{tk=0;scenes.forEach(s=>{
+  const r=s.getBoundingClientRect();if(r.bottom<-80||r.top>innerHeight+80)return;
+  const p=cl(-r.top/(r.height-innerHeight));
+  s.style.setProperty('--p',p.toFixed(4));s.style.setProperty('--o',cl(1-(p-.3)*2).toFixed(4));
+  if(s.id==='mapa')render(p)})})}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);
+
+/* Cronología: [día, título, resumen, opciones disponibles, vista del mapa] */
+const D=[
+[16,'El descubrimiento','Bundy informa a Kennedy sobre las fotos del U-2 del 14 de octubre. Primera reunión del ExComm.','mantener el secreto y estudiar diplomacia, ataque aéreo o cuarentena.','cuba'],
+[17,'Más emplazamientos','Nuevos vuelos de reconocimiento revelan más sitios. El ExComm sigue deliberando en secreto.','ampliar el reconocimiento y preparar planes militares.','cuba'],
+[18,'Gromyko en la Casa Blanca','Kennedy recibe al canciller soviético, que presenta la ayuda a Cuba como defensiva; el presidente no revela lo que sabe.','confrontar o ganar tiempo para decidir.','wash'],
+[19,'Presiones militares','Los jefes del Estado Mayor defienden el ataque aéreo y la invasión; Kennedy mantiene en público su agenda.','atacar o limitar la respuesta.','wash'],
+[20,'Se inclina por la cuarentena','Kennedy regresa a Washington y el ExComm recomienda la cuarentena como primer paso.','cuarentena ahora, con el ataque como opción posterior.','wash'],
+[21,'Preparativos','Se ultiman planes y se consulta a aliados, manteniendo el secreto.','fijar el mensaje público y alertar a las fuerzas.','wash'],
+[22,'El discurso','Kennedy anuncia por televisión la cuarentena y exige retirar los misiles.','la respuesta de Moscú: negar, resistir o negociar.','wash'],
+[23,'Proclama y OEA','La Organización de los Estados Americanos respalda la medida y Kennedy firma la proclama.','mantener la línea o ajustarla.','quar'],
+[24,'Cuarentena en vigor','Comienza a las 10:00 (hora de Washington); varios buques soviéticos se detienen o cambian de rumbo.','interceptar o dejar pasar buques.','quar'],
+[25,'En la ONU','Adlai Stevenson muestra fotos de los emplazamientos ante el Consejo de Seguridad.','presión diplomática pública.','wash'],
+[26,'Primera carta','Jrushchov propone retirar los misiles a cambio de una garantía de no invasión. Un petrolero es abordado y autorizado a seguir.','responder a la propuesta o endurecer la postura.','cuba'],
+[27,'Sábado negro','Llega una segunda carta pública que añade los Júpiter de Turquía. Un U-2 es derribado sobre Cuba (muere Rudolf Anderson Jr.) y otro se desvía sobre la URSS. Kennedy opta por responder a la primera carta; Robert Kennedy transmite a Dobrynin el entendimiento reservado.','intensificar, responder al derribo o negociar.','east'],
+[28,'El anuncio','Jrushchov anuncia por Radio Moscú que desmantelará los misiles; Kennedy lo acoge con satisfacción y Castro expone sus cinco puntos.','verificar la retirada.','cuba']];
+const tl=$('#tl'),dp=$('#dp');
+D.forEach((d,i)=>{const b=document.createElement('button');b.textContent=d[0];b.setAttribute('aria-label',`${d[0]} de octubre: ${d[1]}`);b.onclick=()=>pick(i);tl.append(b)});
+function pick(i){
+ const d=D[i];$$('#tl button').forEach((b,j)=>b.classList.toggle('on',j===i));
+ dp.innerHTML=`<p class="k">Día ${i+1} de 13: ${d[0]} de octubre de 1962</p><h3>${d[1]}</h3><p>${d[2]}</p><p class="mut"><b>Opciones sobre la mesa:</b> ${d[3]}</p><button id="vm">Ver en el mapa</button>`;
+ $('#vm').onclick=()=>{
+  if(RM){render(.5);$('#mapa').scrollIntoView();setView(V[d[4]])}
+  else{goP(.5);setTimeout(()=>setView(V[d[4]]),900)}}}
+pick(0);render(RM?.5:0);onScroll();
+})();
+</script>
+</body></html>
